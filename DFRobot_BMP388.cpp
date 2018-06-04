@@ -491,19 +491,6 @@ void DFRobot_BMP388::parse_calib_data(const uint8_t *reg_data)
   reg_calib_data->par_p11 = (int8_t)reg_data[20];
   temp_var = 36893488147419103232.0f;
   quantized_calib_data->par_p11 = ((double)reg_calib_data->par_p11 / temp_var);
-  /*
-  Serial.println(reg_calib_data->par_p1);
-  Serial.println(reg_calib_data->par_p2);
-  Serial.println(reg_calib_data->par_p3);
-  Serial.println(reg_calib_data->par_p4);
-  Serial.println(reg_calib_data->par_p5);
-  Serial.println(reg_calib_data->par_p6);
-  Serial.println(reg_calib_data->par_p7);
-  Serial.println(reg_calib_data->par_p8);
-  Serial.println(reg_calib_data->par_p9);
-  Serial.println(reg_calib_data->par_p10);
-  Serial.println(reg_calib_data->par_p11);
-  Serial.println("--------");*/
 }
 
 /*!
@@ -525,7 +512,7 @@ double DFRobot_BMP388::compensate_temperature(const struct bmp3_uncomp_data *unc
               * calib_data->quantized_calib_data.par_t3;
 
   /* Return compensated temperature */
-  return calib_data->quantized_calib_data.t_lin
+  return calib_data->quantized_calib_data.t_lin;
 }
 
 /*!
@@ -551,12 +538,6 @@ double DFRobot_BMP388::compensate_pressure(const struct bmp3_uncomp_data *uncomp
   partial_data3 = quantized_calib_data->par_p8 * bmp3_pow(quantized_calib_data->t_lin, 3);
   partial_out1 = quantized_calib_data->par_p5 + partial_data1 + partial_data2 + partial_data3;
   
-  //Serial.println(partial_data1);
-  //Serial.println(partial_data2);
-  //Serial.println(partial_data3);
-  //Serial.println(quantized_calib_data->par_p5);
-  //Serial.println(partial_out1);
-  //Serial.println("~~~~");
   
   partial_data1 = quantized_calib_data->par_p2 * quantized_calib_data->t_lin;
   partial_data2 = quantized_calib_data->par_p3 * bmp3_pow(quantized_calib_data->t_lin, 2);
@@ -564,24 +545,13 @@ double DFRobot_BMP388::compensate_pressure(const struct bmp3_uncomp_data *uncomp
   partial_out2 = uncomp_data->pressure *
       (quantized_calib_data->par_p1 + partial_data1 + partial_data2 + partial_data3);
       
-  //Serial.println(quantized_calib_data->par_p1*10000000);
-  //Serial.println(uncomp_data->pressure);
-  //Serial.println(partial_data1*10000000);
-  //Serial.println(partial_data2*10000000);
-  //Serial.println(partial_data3*10000000);
-  //Serial.println(partial_out2);
-  //Serial.println((quantized_calib_data->par_p1 + partial_data1 + partial_data2 + partial_data3)*1000000);
-  //Serial.println("===========");
   
   
   partial_data1 = bmp3_pow((double)uncomp_data->pressure, 2);
   partial_data2 = quantized_calib_data->par_p9 + quantized_calib_data->par_p10 * quantized_calib_data->t_lin;
   partial_data3 = partial_data1 * partial_data2;
   partial_data4 = partial_data3 + bmp3_pow((double)uncomp_data->pressure, 3) * quantized_calib_data->par_p11;
-  //Serial.println(partial_data4);
   comp_press = partial_out1 + partial_out2 + partial_data4;
-  //Serial.println(comp_press);
-  ////Serial.println(quantized_calib_data->t_lin);
   return comp_press;
 }
 
