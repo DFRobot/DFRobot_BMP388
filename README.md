@@ -1,6 +1,6 @@
 # BMP388 Library for Arduino/ESP32/RaspberrayPi
 This is a Library for BMP388, the function is to read temperature and pressure.
-Put the SVG here
+
 ## Table of Contents
 
 * [Summary](#summary)
