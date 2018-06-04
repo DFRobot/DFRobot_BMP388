@@ -1,4 +1,5 @@
 # Connect bmp388 and esp32 via SPI.
+# Connect CSB pin to IO26/D3 of esp32
 # Download bmp388.py and downloadAndRun this demo.
 
 import bmp388
