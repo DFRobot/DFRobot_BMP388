@@ -11,9 +11,12 @@ DFRobot_BMP388	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 begin	KEYWORD2
-reset	KEYWORD2
+readCalibratedElevation	KEYWORD2
+readSeaLevel	KEYWORD2
+readElevation	KEYWORD2
 readTemperature	KEYWORD2
 readPressure	KEYWORD2
+
 #######################################
 # Constants (LITERAL1)
 #######################################

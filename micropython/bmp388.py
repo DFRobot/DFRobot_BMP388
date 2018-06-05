@@ -174,18 +174,18 @@ class DFRobot_BMP388:
     partial_data4 = partial_data3 + pow(uncomp_pressure, 3) * self.par_p11
     comp_press = partial_out1 + partial_out2 + partial_data4
     return comp_press;
+    
+  def readCalibratedElevation(self,seaLevel):
+    pressure = self.readPressure()
+    return round((1.0 - pow(pressure / seaLevel, 0.190284)) * 287.15 / 0.0065,2)
 
-class DFRobot_BMP388_I2C(DFRobot_BMP388):
-  def __init__(self,i2c):
-    super(DFRobot_BMP388_I2C,self).__init__()
-    self.i2c = i2c#I2C(scl=Pin(22), sda=Pin(21), freq=100000)
+  def readSeaLevel(self, altitude):
+    pressure = self.readPressure()
+    return round(pressure / pow(1.0 - (altitude / 44330.0), 5.255),2)
 
-  def bmp3_get_regs(self,reg,len):
-    rslt = self.i2c.readfrom_mem(self.addr,reg,len)
-    return rslt
-  
-  def bmp3_set_regs(self,reg,data):
-    self.i2c.writeto_mem(self.addr,reg,data)
+  def readElevation(self):
+    pressure = self.readPressure()
+    return round((1.0 - pow(pressure / 101325, 0.190284)) * 287.15 / 0.0065,2)
   
 class DFRobot_BMP388_SPI(DFRobot_BMP388):
   def __init__(self,spi,cs):

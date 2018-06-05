@@ -7,8 +7,6 @@
   * Elevation is calculated based on temperature and sea level pressure.
   * The example can count an approximate elevation.
   *
-  * Formula:
-  * P=P0*(1-H/44300)^5.256
   * @n pen the serial monitor, check the elevation.
   *
   * Copyright   [DFRobot](http://www.dfrobot.com), 2016
@@ -23,23 +21,44 @@
 #include "math.h"
 #include "bmp3_defs.h"
 
+/* If there is no need to calibrate elevation, comment this line */
+#define CALIBRATE_Elevation
+
 /* Create a bmp388 object of SPI interface and the SPI chip selection pin is 3 */
 DFRobot_BMP388 bmp388(3);
 
+float seaLevel;
+
 void setup(){
-  /*Initialize the serial port*/
+  /* Initialize the serial port */
   Serial.begin(9600);
-  /*Initialize bmp388*/
+  /* Initialize bmp388 */
   bmp388.begin();
+  /* You can use an accurate altitude to calibrate sea level air pressure. 
+   * And then use this calibrated sea level pressure as a reference to obtain the calibrated altitude.
+   * In this case,525.0m is chendu accurate altitude.
+   */
+  delay(100);
+  seaLevel = bmp388.readSeaLevel(525.0);
+  Serial.print("seaLevel : ");
+  Serial.print(seaLevel);
+  Serial.println(" Pa");
 }
 
 void loop(){
-  /*Read the atmospheric pressure, count the elevation*/
-  float pressure = bmp388.readPressure();
-  float elevation = 44330 * (1.0 - pow(pressure / 101325, 0.1903));
+  #ifdef CALIBRATE_Elevation
+  /* Read the calibrated elevation */
+  float elevation = bmp388.readCalibratedElevation(seaLevel);
+  Serial.print("calibrate Elevation : ");
+  Serial.print(elevation);
+  Serial.println(" m");
+  #else
+  /* Read the elevation */
+  float elevation = bmp388.readElevation();
   Serial.print("Elevation : ");
   Serial.print(elevation);
   Serial.println(" m");
+  #endif
   delay(100);
 }
 

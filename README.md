@@ -54,9 +54,35 @@ float readTemperature();
 /*
  * @brief Read pressure.
  *
- * @return pressure
+ * @return Pressure
  */
 float readPressure();
+
+/*
+ * @brief Read normalised atmospheric pressure of sea level
+ *
+ * @param altitude The local elevation
+ *
+ * @return Pressure of sea level
+ */
+float readSeaLevel(float altitude);
+
+/*
+ * @brief Read calibrated elevation.
+ *
+ * @param seaLevel Pressure of sea level
+ *
+ * @return Calibrated elevation
+ */
+float readCalibratedElevation(float seaLevel);
+
+/*
+ * @brief Read elevation.
+ *
+ * @return elevation
+ */
+float readElevation(void);
+
 ```
 
 ### micropython
@@ -93,6 +119,31 @@ readTemperature()
  */
 readPressure()
 
+/*
+ * @brief Read normalised atmospheric pressure of sea level
+ *
+ * @param altitude The local elevation
+ *
+ * @return Pressure of sea level
+ */
+readSeaLevel(altitude)
+
+/*
+ * @brief Read calibrated elevation.
+ *
+ * @param seaLevel Pressure of sea level
+ *
+ * @return Calibrated elevation
+ */
+readCalibratedElevation(seaLevel)
+
+/*
+ * @brief Read elevation.
+ *
+ * @return elevation
+ */
+readElevation()
+
 ```
 ### Raspberry Pi
 ```python
@@ -124,6 +175,31 @@ readTemperature()
  * @return pressure
  */
 readPressure()
+
+/*
+ * @brief Read normalised atmospheric pressure of sea level
+ *
+ * @param altitude The local elevation
+ *
+ * @return Pressure of sea level
+ */
+readSeaLevel(altitude)
+
+/*
+ * @brief Read calibrated elevation.
+ *
+ * @param seaLevel Pressure of sea level
+ *
+ * @return Calibrated elevation
+ */
+readCalibratedElevation(seaLevel)
+
+/*
+ * @brief Read elevation.
+ *
+ * @return elevation
+ */
+readElevation()
 ```
 
 

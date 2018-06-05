@@ -570,3 +570,23 @@ double DFRobot_BMP388::bmp3_pow(double base, uint8_t power)
 
   return pow_output;
 }
+
+float DFRobot_BMP388::readCalibratedElevation(float seaLevel)
+{
+  float pressure = readPressure();
+  return (1.0 - pow((float)pressure / seaLevel, 0.190284)) * 287.15 / 0.0065;
+}
+
+float DFRobot_BMP388::readSeaLevel(float altitude)
+{
+  float pressure = readPressure();
+  return (pressure / pow(1.0 - (altitude / 44330.0), 5.255));
+}
+
+float DFRobot_BMP388::readElevation(void)
+{
+  float pressure = readPressure();
+  return (1.0 - pow(pressure / 101325, 0.190284)) * 287.15 / 0.0065;
+}
+
+

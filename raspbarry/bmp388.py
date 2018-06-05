@@ -187,6 +187,18 @@ class DFRobot_BMP388:
     #print(t_lin)
     return comp_press;
     
+  def readCalibratedElevation(self,seaLevel):
+    pressure = self.readPressure()
+    return round((1.0 - pow(pressure / seaLevel, 0.190284)) * 287.15 / 0.0065,2)
+
+  def readSeaLevel(self, altitude):
+    pressure = self.readPressure()
+    return round(pressure / pow(1.0 - (altitude / 44330.0), 5.255),2)
+
+  def readElevation(self):
+    pressure = self.readPressure()
+    return round((1.0 - pow(pressure / 101325, 0.190284)) * 287.15 / 0.0065,2)
+    
 class DFRobot_BMP388_SPI(DFRobot_BMP388):
   def __init__(self,cs):
     self.spi = spidev.SpiDev(0,0)

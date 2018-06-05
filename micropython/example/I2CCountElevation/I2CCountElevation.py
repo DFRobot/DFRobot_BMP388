@@ -1,4 +1,4 @@
-# Connect bmp388 and esp32 via IIC.
+# Connect bmp388 and esp32 via I2C.
 # Download bmp388.py and downloadAndRun this demo.
 
 import bmp388
@@ -8,12 +8,26 @@ import time
 # Create I2C object
 i2c = I2C(scl=Pin(22), sda=Pin(21), freq=100000)
 
-# Create a bmp388 object to communicate with IIC.
+# Create a bmp388 object to communicate with I2C.
 bmp388 = bmp388.DFRobot_BMP388_I2C(i2c)
+time.sleep(0.5)
 
-# Read pressure and count elevation.
+# You can use an accurate altitude to calibrate sea level air pressure. 
+# And then use this calibrated sea level pressure as a reference to obtain the calibrated altitude.
+# In this case,525.0m is chendu accurate altitude.
+seaLevel = bmp388.readSeaLevel(525.0);
+print("seaLevel : %s Pa" %seaLevel)
+
+# If there is no need to calibrate elevation, calibrated_elevation = False
+calibrated_elevation = True
+
 while 1:
-  pressure = bmp388.readPressure();
-  elevation = round(44330 * (1.0 - pow(pressure / 101325, 0.1903)),1)
-  print("elevation : %s m" %elevation)
+  if(calibrated_elevation):
+    # Read the calibrated elevation 
+    elevation = bmp388.readCalibratedElevation(seaLevel)
+    print("calibrate Elevation : %s m" %elevation)
+  else:
+    # Read the elevation 
+    elevation = bmp388.readElevation();
+    print("Elevation : %s m" %elevation)
   time.sleep(0.5)
