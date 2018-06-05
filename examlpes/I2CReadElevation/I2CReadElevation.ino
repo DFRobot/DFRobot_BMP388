@@ -1,5 +1,5 @@
  /*!
-  * file I2CCountElevation.ino
+  * file I2CReadElevation.ino
   * 
   * Connect BMP388 to IIC interface of Arduino, download the program.
   * Elevation is calculated based on temperature and sea level pressure.

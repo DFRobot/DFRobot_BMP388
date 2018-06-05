@@ -1,5 +1,5 @@
  /*!
-  * file SPICountElevation.ino
+  * file SPIReadElevation.ino
   * 
   * Connect BMP388 to SPI interface of Arduino and connect CSB pin to pin3 of Arduino,
   * download the program.
