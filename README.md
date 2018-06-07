@@ -29,14 +29,14 @@ This is a Library for BMP388, the function is to read temperature and pressure.
 /*
  * @brief bmp388 I2C constructor
  */
-DFRobot_BMP388();
+DFRobot_BMP388_I2C();
 
 /*
  * @brief bmp388 SPI constructor
  *
  * @param cs Chip selection pin of SPI
  */
-DFRobot_BMP388(int cs);
+DFRobot_BMP388_SPI(int cs);
 
 /*
  * @brief Initialize bmp388, check for chip id, reset the sensor, read the calibration data and config sensor

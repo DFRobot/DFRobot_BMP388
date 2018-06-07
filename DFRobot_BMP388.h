@@ -31,9 +31,9 @@ public:
   int8_t begin();
   float readTemperature();
   float readPressure();
-  float readCalibratedElevation(float seaLevel);
+  float readCalibratedAltitude(float seaLevel);
   float readSeaLevel(float altitude);
-  float readElevation(void);
+  float readAltitude(void);
   
 private:
   int8_t reset();

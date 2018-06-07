@@ -18,16 +18,16 @@ time.sleep(0.5)
 seaLevel = bmp388.readSeaLevel(525.0);
 print("seaLevel : %s Pa" %seaLevel)
 
-# If there is no need to calibrate elevation, calibrated_elevation = False
-calibrated_elevation = True
+# If there is no need to calibrate altitude, calibrated_altitude = False
+calibrated_altitude = True
 
 while 1:
-  if(calibrated_elevation):
-    # Read the calibrated elevation 
-    elevation = bmp388.readCalibratedElevation(seaLevel)
-    print("calibrate Elevation : %s m" %elevation)
+  if(calibrated_altitude):
+    # Read the calibrated altitude 
+    altitude = bmp388.readCalibratedAltitude(seaLevel)
+    print("calibrate Altitude : %s m" %altitude)
   else:
-    # Read the elevation 
-    elevation = bmp388.readElevation();
-    print("Elevation : %s m" %elevation)
+    # Read the altitude 
+    altitude = bmp388.readAltitude();
+    print("Altitude : %s m" %altitude)
   time.sleep(0.5)

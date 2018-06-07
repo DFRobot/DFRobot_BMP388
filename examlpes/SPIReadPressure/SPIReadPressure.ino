@@ -13,17 +13,20 @@
   * date  2018-5-29
   */
 #include "DFRobot_BMP388.h"
+#include "DFRobot_BMP388_SPI.h"
 #include "SPI.h"
 #include "Wire.h"
 #include "bmp3_defs.h"
 
 /*Create a bmp388 object of SPI interface and the SPI chip selection pin is 3*/
-DFRobot_BMP388 bmp388(3);
+DFRobot_BMP388_SPI bmp388(3);
 void setup(){
   /*Initialize the serial port*/
   Serial.begin(9600);
   /*Initialize bmp388*/
-  bmp388.begin();
+  if(!bmp388.begin()){
+    Serial.println("Initialize error!");
+  }
 }
 
 void loop(){

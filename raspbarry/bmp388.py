@@ -187,7 +187,7 @@ class DFRobot_BMP388:
     #print(t_lin)
     return comp_press;
     
-  def readCalibratedElevation(self,seaLevel):
+  def readCalibratedAltitude(self,seaLevel):
     pressure = self.readPressure()
     return round((1.0 - pow(pressure / seaLevel, 0.190284)) * 287.15 / 0.0065,2)
 
@@ -195,7 +195,7 @@ class DFRobot_BMP388:
     pressure = self.readPressure()
     return round(pressure / pow(1.0 - (altitude / 44330.0), 5.255),2)
 
-  def readElevation(self):
+  def readAltitude(self):
     pressure = self.readPressure()
     return round((1.0 - pow(pressure / 101325, 0.190284)) * 287.15 / 0.0065,2)
     
