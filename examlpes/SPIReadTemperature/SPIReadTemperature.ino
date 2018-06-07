@@ -25,7 +25,7 @@ void setup(){
   /*Initialize the serial port*/
   Serial.begin(9600);
   /*Initialize bmp388*/
-  if(!bmp388.begin()){
+  if(bmp388.begin()){
     Serial.println("Initialize error!");
   }
 }
