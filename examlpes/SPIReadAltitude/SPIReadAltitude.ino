@@ -25,8 +25,18 @@
 /* If there is no need to calibrate altitude, comment this line */
 #define CALIBRATE_Altitude
 
+/*select CS pin*/
+#ifdef __AVR__
+int cs = 3;
+#elif defined ESP_PLATFORM
+int cs = D3;
+#elif defined __ets__
+int cs = D3;
+#else
+  #error unknow board
+#endif
 /* Create a bmp388 object of SPI interface and the SPI chip selection pin is 3 */
-DFRobot_BMP388_SPI bmp388(3);
+DFRobot_BMP388_SPI bmp388(cs);
 
 float seaLevel;
 

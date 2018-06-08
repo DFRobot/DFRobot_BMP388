@@ -25,9 +25,28 @@
 #if BMP388_I2C
 DFRobot_BMP388_I2C bmp388;
 #else
-DFRobot_BMP388_SPI bmp388(3);
+/*select CS pin*/
+#ifdef __AVR__
+int cs = 3;
+#elif defined ESP_PLATFORM
+int cs = D3;
+#elif defined __ets__
+int cs = D3;
+#else
+  #error unknow board
 #endif
-
+DFRobot_BMP388_SPI bmp388(cs);
+#endif
+/*INT pin*/
+#ifdef __AVR__
+int pin = 4;
+#elif defined ESP_PLATFORM
+int pin = D4;
+#elif defined __ets__
+int pin = D4;
+#else
+  #error unknow board
+#endif
 void setup(){
   /* Initialize the serial port */
   Serial.begin(9600);
@@ -37,12 +56,12 @@ void setup(){
     while(1);
   }
   /* connect pin4 with INT pin, set pin4 mode*/
-  pinMode(4, INPUT);
+  pinMode(pin, INPUT);
 }
 
 void loop(){
   /* config INT and read INT pin */
-  if(bmp388.INTReadPin(4)){
+  if(bmp388.INTReadPin(pin)){
     /*Read temperature and pressure*/
     float temperature = bmp388.readTemperature();
     float pressure = bmp388.readPressure();
