@@ -34,6 +34,7 @@ public:
   float readCalibratedAltitude(float seaLevel);
   float readSeaLevel(float altitude);
   float readAltitude(void);
+  int8_t INTReadPin(int pin);
   
 private:
   int8_t reset();

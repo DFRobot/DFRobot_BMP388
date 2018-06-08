@@ -34,6 +34,7 @@ void setup(){
   /* Initialize bmp388*/
   if(bmp388.begin()){
     Serial.println("Initialize error!");
+    while(1);
   }
   /*You can use an accurate altitude to calibrate sea level air pressure. 
    *And then use this calibrated sea level pressure as a reference to obtain the calibrated altitude.

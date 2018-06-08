@@ -25,6 +25,7 @@ void setup(){
   /*Initialize bmp388*/
   if(bmp388.begin()){
     Serial.println("Initialize error!");
+    while(1);
   }
 }
 

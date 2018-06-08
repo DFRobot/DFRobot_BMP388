@@ -20,6 +20,7 @@ class DFRobot_BMP388:
     self.par_p10 = 0
     self.par_p11 = 0
     self.addr = 119
+    self.dev_en = 1
     chip_id = self.bmp3_get_regs(0x00, 1)[0]
     # Print(hex(chip_id))
     if (chip_id != 0x50):
@@ -126,10 +127,12 @@ class DFRobot_BMP388:
     
     
   def readTemperature(self):
-    return round(self.bmp3_get_sensor_data(2),2)
+    if self.dev_en:
+      return round(self.bmp3_get_sensor_data(2),2)
     
   def readPressure(self):
-    return round(self.bmp3_get_sensor_data(1),2)
+    if self.dev_en:
+      return round(self.bmp3_get_sensor_data(1),2)
 
   def bmp3_get_sensor_data(self,sensor_comp):
     rslt = self.bmp3_get_regs(0x04,6)
@@ -186,6 +189,17 @@ class DFRobot_BMP388:
   def readAltitude(self):
     pressure = self.readPressure()
     return round((1.0 - pow(pressure / 101325, 0.190284)) * 287.15 / 0.0065,2)
+  
+  def INTReadPin(self,pin):
+    reg_data = bytearray(1)
+    reg_data[0] = 0x40;
+    reg_addr = 0x19;
+    self.bmp3_set_regs(reg_addr, reg_data);
+    if(pin.value()==0):
+      self.dev_en = 0
+    else:
+      self.dev_en = 1
+    return self.dev_en;
   
 class DFRobot_BMP388_SPI(DFRobot_BMP388):
   def __init__(self,spi,cs):

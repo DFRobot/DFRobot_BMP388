@@ -353,6 +353,8 @@ extern "C"
 #define BMP3_INT_STATUS_DRDY_MSK   (0x08)
 #define BMP3_INT_STATUS_DRDY_POS   (0x03)
 
+#define BMP3_INT_STATUS_OFF (0x00)
+#define BMP3_INT_STATUS_ON (0x01)
 /*! Power control settings */
 #define POWER_CNTL       (0x0006)
 
@@ -363,6 +365,7 @@ extern "C"
 /**\name Macro to combine two 8 bit data's to form a 16 bit data */
 #define BMP3_CONCAT_BYTES(msb, lsb)     (((uint16_t)msb << 8) | (uint16_t)lsb)
 
+#define BMP3_SET(data,stat)((data##_MSK>>data##_POS)&stat)
 
 #define BMP3_SET_BITS(reg_data, bitname, data) \
         ((reg_data & ~(bitname##_MSK)) | \
@@ -667,27 +670,17 @@ struct bmp3_uncomp_data {
  * @brief bmp3 device structure
  */
 struct bmp3_dev {
-  /*! Chip Id */
   uint8_t chip_id;
-  /*! Device Id */
   uint8_t dev_id;
-  /*! SPI/I2C interface */
   enum bmp3_intf intf;
-  /*! Decide SPI or I2C read mechanism */
   uint8_t dummy_byte;
-  /*! Read function pointer */
+  uint8_t dev_en;
   bmp3_com_fptr_t read;
-  /*! Write function pointer */
   bmp3_com_fptr_t write;
-  /*! Delay function pointer */
   bmp3_delay_fptr_t delay_ms;
-  /*! Trim data */
   struct bmp3_calib_data calib_data;
-  /*! Sensor Settings */
   struct bmp3_settings settings;
-  /*! Sensor and interrupt status flags */
   struct bmp3_status status;
-  /*! FIFO data and settings structure */
   struct bmp3_fifo *fifo;
 };
 
