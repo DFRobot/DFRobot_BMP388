@@ -6,7 +6,8 @@
 # Datatypes (KEYWORD1)
 #######################################
 DFRobot_BMP388	KEYWORD1
-
+DFRobot_BMP388_I2C	KEYWORD1
+DFRobot_BMP388_SPI	KEYWORD1
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################

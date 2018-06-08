@@ -28,9 +28,7 @@ DFRobot_BMP388_I2C bmp388;
 /*select CS pin*/
 #ifdef __AVR__
 int cs = 3;
-#elif defined ESP_PLATFORM
-int cs = D3;
-#elif defined __ets__
+#elif (defined ESP_PLATFORM)||(defined __ets_)
 int cs = D3;
 #else
   #error unknow board
@@ -40,11 +38,8 @@ DFRobot_BMP388_SPI bmp388(cs);
 /*INT pin*/
 #ifdef __AVR__
 int pin = 4;
-#elif defined ESP_PLATFORM
-int pin = D4;
-#elif defined __ets__
-int pin = D4;
-#else
+#elif (defined ESP_PLATFORM)||(defined __ets_)
+int cs = D3;
   #error unknow board
 #endif
 void setup(){

@@ -28,9 +28,7 @@
 /*select CS pin*/
 #ifdef __AVR__
 int cs = 3;
-#elif defined ESP_PLATFORM
-int cs = D3;
-#elif defined __ets__
+#elif (defined ESP_PLATFORM)||(defined __ets_)
 int cs = D3;
 #else
   #error unknow board
