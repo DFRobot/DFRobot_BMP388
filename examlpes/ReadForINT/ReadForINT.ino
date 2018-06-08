@@ -39,9 +39,17 @@ DFRobot_BMP388_SPI bmp388(cs);
 #ifdef __AVR__
 int pin = 4;
 #elif (defined ESP_PLATFORM)||(defined __ets_)
-int cs = D3;
+int pin = D4;
+#else
   #error unknow board
 #endif
+
+int flag = 0;
+long times = 0;
+void inter(){
+  flag = 1;
+}
+
 void setup(){
   /* Initialize the serial port */
   Serial.begin(9600);
@@ -52,12 +60,16 @@ void setup(){
   }
   /* connect pin4 with INT pin, set pin4 mode*/
   pinMode(pin, INPUT);
+  /* config INT and read INT pin */
+  bmp388.INTEnable();
+  /*while rising read temperature and pressure*/
+  attachInterrupt(pin,inter,RISING);
 }
 
 void loop(){
-  /* config INT and read INT pin */
-  if(bmp388.INTReadPin(pin)){
-    /*Read temperature and pressure*/
+  times = millis();
+  if(flag == 1){
+  /*Read temperature and pressure*/
     float temperature = bmp388.readTemperature();
     float pressure = bmp388.readPressure();
     Serial.print("temperature : ");
@@ -66,6 +78,11 @@ void loop(){
     Serial.print("   pressure : ");
     Serial.print(pressure);
     Serial.println(" Pa");
+    flag = 0;
     delay(100);
   }
+  if(times >= 10000){
+    bmp388.INTDisable();
+  }
+  times++;
 }

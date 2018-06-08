@@ -3,6 +3,7 @@
 # Download bmp388.py and downloadAndRun this demo.
 
 import bmp388
+import machine
 from machine import Pin,I2C,SPI
 import time
 
@@ -28,10 +29,23 @@ else:
 
 INT = Pin(27,Pin.IN) 
 # Read pressure and print it.
-while 1:
-  if(bmp388.INTReadPin(INT)):
-    temp = bmp388.readTemperature()
-    print("Temperature : %s C" %temp)
-    pres = bmp388.readPressure()
-    print("Pressure : %s Pa" %pres)
-  time.sleep(0.5)
+flag = 0
+def func(v):
+  global flag
+  flag = 1
+bmp388.INTEnable()
+try:
+  t = time.ticks_ms()
+  INT.irq(trigger=Pin.IRQ_RISING, handler=func)    #init irq,set interrupt on rising edge,and callback function is func
+  while True:
+    if(flag == 1):
+      temp = bmp388.readTemperature()
+      print("Temperature : %s C" %temp)
+      pres = bmp388.readPressure()
+      print("Pressure : %s Pa" %pres)
+      flag = 0
+      time.sleep(0.5)
+    if(time.ticks_ms()-t>10000):
+      bmp388.INTDisable()
+except:
+  machine.disable_irq()

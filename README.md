@@ -85,13 +85,14 @@ float readCalibratedElevation(float seaLevel);
 float readElevation(void);
 
 /*
- * @brief Set INT and Read INT pin state.
- *
- * @param pin connect INT pin
- *
- * @return pin state
+ * @brief Enable INT.
  */
-int8_t INTReadPin(int pin);
+void INTEnable();
+
+/*
+ * @brief Disable INT.
+ */
+void INTDisable();
 
 ```
 
@@ -155,14 +156,16 @@ readCalibratedElevation(seaLevel)
 readElevation()
 
 /*
- * @brief Set INT and Read INT pin state.
- *
- * @param pin connect INT pin
- *
- * @return pin state
+ * @brief Enable INT.
  */
-INTReadPin(pin)
+INTEnable()
+
+/*
+ * @brief Disable INT.
+ */
+INTDisable()
 ```
+
 ### Raspberry Pi
 ```python
 
@@ -220,13 +223,14 @@ readCalibratedElevation(seaLevel)
 readElevation()
 
 /*
- * @brief Set INT and Read INT pin state.
- *
- * @param pin connect INT pin
- *
- * @return pin state
+ * @brief Enable INT.
  */
-INTReadPin(pin)
+INTEnable()
+
+/*
+ * @brief Disable INT.
+ */
+INTDisable()
 ```
 
 

@@ -24,7 +24,7 @@
 # 
 import bmp388
 import time
-
+import RPi.GPIO as GPIO
 # If 1, connect BMP388 to SPI interface of esp32, else connect I2C interface
 if 0:
   # Create a bmp388 object to communicate with I2C.
@@ -38,11 +38,27 @@ else:
   bmp388 = bmp388.DFRobot_BMP388_SPI(cs)
 
 INT = 27 
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(INT, GPIO.IN)
+
+flag = 0
+def func(v):
+  global flag
+  flag = 1
+  
+bmp388.INTEnable()
+
+GPIO.add_event_detect(INT,GPIO.RISING,callback=func,bouncetime=200)
+t = time.time()
 # Read pressure and print it.
 while 1:
-  if(bmp388.INTReadPin(INT)):
+  if(flag == 1):
     temp = bmp388.readTemperature()
     print("Temperature : %s C" %temp)
     pres = bmp388.readPressure()
     print("Pressure : %s Pa" %pres)
-  time.sleep(0.5)
+    flag = 0
+    time.sleep(0.5)
+  if(time.time()-t>10):
+    bmp388.INTDisable()

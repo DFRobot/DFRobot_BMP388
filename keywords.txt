@@ -17,7 +17,8 @@ readSeaLevel	KEYWORD2
 readElevation	KEYWORD2
 readTemperature	KEYWORD2
 readPressure	KEYWORD2
-INTReadPin	KEYWORD2
+INTEnable	KEYWORD2
+INTDisable	KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################

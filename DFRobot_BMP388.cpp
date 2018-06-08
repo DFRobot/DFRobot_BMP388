@@ -77,7 +77,6 @@ int8_t user_spi_read(uint8_t dev_id, uint8_t reg_addr,uint8_t *data, uint16_t le
 DFRobot_BMP388::DFRobot_BMP388(){
   //nCS = 0;
   dev.dev_id = 119;
-  dev.dev_en = 1;
   dev.intf = BMP3_I2C_INTF;
   dev.read = user_i2c_read;
   dev.write = user_i2c_write;
@@ -88,7 +87,6 @@ DFRobot_BMP388::DFRobot_BMP388(){
 DFRobot_BMP388::DFRobot_BMP388(int cs){
   nCS = cs;
   dev.dev_id = 0;
-  dev.dev_en = 1;
   dev.intf = BMP3_SPI_INTF;
   dev.read = user_spi_read;
   dev.write = user_spi_write;
@@ -127,24 +125,16 @@ float DFRobot_BMP388::readTemperature(){
   uint8_t sensor_comp;
   sensor_comp = BMP3_TEMP;
   struct bmp3_data data;
-  if(dev.dev_en){
-    bmp3_get_sensor_data(sensor_comp, &data);
-    return data.temperature;
-  }
-  else
-    return 0;
+  bmp3_get_sensor_data(sensor_comp, &data);
+  return data.temperature;
 }
 
 float DFRobot_BMP388::readPressure(){
   uint8_t sensor_comp;
   sensor_comp = BMP3_PRESS;
   struct bmp3_data data;
-  if(dev.dev_en){
-    bmp3_get_sensor_data(sensor_comp, &data);
-    return data.pressure;
-  }
-  else
-    return 0;
+  bmp3_get_sensor_data(sensor_comp, &data);
+  return data.pressure;
 }
 
 int8_t DFRobot_BMP388::begin()
@@ -613,18 +603,14 @@ float DFRobot_BMP388::readAltitude(void)
   return (1.0 - pow(pressure / 101325, 0.190284)) * 287.15 / 0.0065;
 }
 
-int8_t DFRobot_BMP388::INTReadPin(int pin){
+void DFRobot_BMP388::INTEnable(){
   uint8_t reg_data = 0x40;
   uint8_t reg_addr = BMP3_INT_CTRL_ADDR;
   bmp3_set_regs(&reg_addr, &reg_data, 1);
-  if(digitalRead(pin)==0){
-    dev.dev_en = BMP3_SET(BMP3_INT_DRDY_EN,BMP3_INT_STATUS_OFF);
-    return 0;
-  }
-  else{
-    dev.dev_en = BMP3_SET(BMP3_INT_DRDY_EN,BMP3_INT_STATUS_ON);
-    return 1;
-  }
-  
 }
 
+void DFRobot_BMP388::INTDisable(){
+  uint8_t reg_data = 0x00;
+  uint8_t reg_addr = BMP3_INT_CTRL_ADDR;
+  bmp3_set_regs(&reg_addr, &reg_data, 1);
+}
