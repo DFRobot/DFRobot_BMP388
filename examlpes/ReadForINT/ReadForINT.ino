@@ -27,7 +27,7 @@
 /*select CS pin*/
 #ifdef __AVR__
 int cs = 3;
-#elif (defined ESP_PLATFORM)||(defined __ets_)
+#elif (defined ESP_PLATFORM)||(defined __ets__)
 int cs = D3;
 #else
   #error unknow board
@@ -35,7 +35,7 @@ int cs = D3;
 /*INT pin*/
 #ifdef __AVR__
 int pin = 2;
-#elif (defined ESP_PLATFORM)||(defined __ets_)
+#elif (defined ESP_PLATFORM)||(defined __ets__)
 int pin = D2;
 #else
   #error unknow board
@@ -87,5 +87,4 @@ void loop(){
   if(times >= 10000){
     bmp388.INTDisable();
   }
-  times++;
 }
