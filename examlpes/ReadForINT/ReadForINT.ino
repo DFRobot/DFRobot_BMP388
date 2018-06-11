@@ -63,7 +63,7 @@ void setup(){
   }
   /* connect pin4 with INT pin, set pin4 mode*/
   pinMode(pin, INPUT);
-  /* config INT and read INT pin */
+  /* config INT */
   bmp388.INTEnable();
   /*while rising read temperature and pressure*/
   attachInterrupt(digitalPinToInterrupt(pin),inter,RISING);
@@ -84,6 +84,7 @@ void loop(){
     flag = 0;
     delay(100);
   }
+  /* After 10 seconds disable INT */
   if(times >= 10000){
     bmp388.INTDisable();
   }
