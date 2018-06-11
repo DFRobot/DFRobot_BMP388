@@ -1,5 +1,6 @@
 # Connect bmp388 and esp32 via IIC/SPI.
 # Connect INT pin and io27
+# If use via SPI, connect CSB pin and io26 
 # Download bmp388.py and downloadAndRun this demo.
 
 import bmp388
