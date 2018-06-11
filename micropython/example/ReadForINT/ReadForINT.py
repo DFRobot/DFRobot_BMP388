@@ -7,7 +7,7 @@ import machine
 from machine import Pin,I2C,SPI
 import time
 
-# If 1, connect BMP388 to SPI interface of esp32, else connect I2C interface
+# If 0, connect BMP388 to SPI interface of esp32, else connect I2C interface
 if 0:
   # Create I2C object
   i2c = I2C(scl=Pin(22), sda=Pin(21), freq=100000)

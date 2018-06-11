@@ -145,7 +145,7 @@ int8_t DFRobot_BMP388::begin()
   DBG();
   rslt = bmp3_get_regs(BMP3_CHIP_ID_ADDR, &chip_id, 1);
   /* Proceed if everything is fine until now */
-  //Serial.println(chip_id);
+  Serial.println(chip_id);
   if (rslt == BMP3_OK) {
     /* Check for chip id validity */
     if (chip_id == BMP3_CHIP_ID) {

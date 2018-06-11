@@ -1,8 +1,10 @@
  /*!
   * file ReadForINT.ino
   * 
-  * Connect BMP388 to IIC/SPI interface of Arduino, download the program.
-  * INT pin connect pin4
+  * Connect BMP388 to IIC/SPI interface of Arduino.
+  * CSB pin connect pin3/D3.
+  * INT pin connect pin2/D2.
+  * Download the program.
   * @n Open serial monitor, the data could be checked. 
   *
   * Copyright   [DFRobot](http://www.dfrobot.com), 2016
@@ -19,12 +21,9 @@
 #include "SPI.h"
 #include "bmp3_defs.h"
 
-/* If BMP388_I2C is 1, connect BMP388 to SPI interface of Arduino, else connect I2C interface*/
+/* If BMP388_I2C is 0, connect BMP388 to SPI interface of Arduino, else connect I2C interface*/
 #define BMP388_I2C 0
 
-#if BMP388_I2C
-DFRobot_BMP388_I2C bmp388;
-#else
 /*select CS pin*/
 #ifdef __AVR__
 int cs = 3;
@@ -33,15 +32,19 @@ int cs = D3;
 #else
   #error unknow board
 #endif
-DFRobot_BMP388_SPI bmp388(cs);
-#endif
 /*INT pin*/
 #ifdef __AVR__
-int pin = 4;
+int pin = 2;
 #elif (defined ESP_PLATFORM)||(defined __ets_)
-int pin = D4;
+int pin = D2;
 #else
   #error unknow board
+#endif
+
+#if BMP388_I2C
+DFRobot_BMP388_I2C bmp388;
+#else
+DFRobot_BMP388_SPI bmp388(cs);
 #endif
 
 int flag = 0;
@@ -63,7 +66,7 @@ void setup(){
   /* config INT and read INT pin */
   bmp388.INTEnable();
   /*while rising read temperature and pressure*/
-  attachInterrupt(pin,inter,RISING);
+  attachInterrupt(digitalPinToInterrupt(pin),inter,RISING);
 }
 
 void loop(){

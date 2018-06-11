@@ -25,7 +25,7 @@
 import bmp388
 import time
 import RPi.GPIO as GPIO
-# If 1, connect BMP388 to SPI interface of esp32, else connect I2C interface
+# If 0, connect BMP388 to SPI interface of raspberry, else connect I2C interface
 if 0:
   # Create a bmp388 object to communicate with I2C.
   bmp388 = bmp388.DFRobot_BMP388_I2C()
