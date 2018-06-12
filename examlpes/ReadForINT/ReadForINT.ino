@@ -1,10 +1,12 @@
  /*!
   * file ReadForINT.ino
   * 
-  * Connect BMP388 to IIC/SPI interface of Arduino.
-  * CSB pin connect pin3/D3.
+  * Connect BMP388 to IIC or SPI interface of Arduino.
+  * CSB pin connect pin3/D3 if use SPI interface.
   * INT pin connect pin2/D2.
   * Download the program.
+  * When the data update, calling inter function,
+  * after change the flag read the data.
   * @n Open serial monitor, the data could be checked. 
   *
   * Copyright   [DFRobot](http://www.dfrobot.com), 2016
@@ -21,8 +23,8 @@
 #include "SPI.h"
 #include "bmp3_defs.h"
 
-/* If BMP388_I2C is 0, connect BMP388 to SPI interface of Arduino, else connect I2C interface*/
-#define BMP388_I2C 0
+/* If BMP388_USE_I2C is 0, connect BMP388 to SPI interface of Arduino, else connect I2C interface*/
+#define BMP388_USE_I2C 0
 
 /*select CS pin*/
 #ifdef __AVR__
@@ -41,7 +43,7 @@ int pin = D2;
   #error unknow board
 #endif
 
-#if BMP388_I2C
+#if BMP388_USE_I2C
 DFRobot_BMP388_I2C bmp388;
 #else
 DFRobot_BMP388_SPI bmp388(cs);
@@ -57,9 +59,9 @@ void setup(){
   /* Initialize the serial port */
   Serial.begin(9600);
   /* Initialize bmp388 */
-  if(bmp388.begin()){
+  while(bmp388.begin()){
     Serial.println("Initialize error!");
-    while(1);
+    delay(1000);
   }
   /* connect pin4 with INT pin, set pin4 mode*/
   pinMode(pin, INPUT);

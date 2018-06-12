@@ -32,9 +32,9 @@ void setup(){
   /* Initialize the serial port*/
   Serial.begin(9600);
   /* Initialize bmp388*/
-  if(bmp388.begin()){
+  while(bmp388.begin()){
     Serial.println("Initialize error!");
-    while(1);
+    delay(1000);
   }
   /*You can use an accurate altitude to calibrate sea level air pressure. 
    *And then use this calibrated sea level pressure as a reference to obtain the calibrated altitude.
