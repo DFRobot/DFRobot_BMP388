@@ -69,10 +69,10 @@ void setup(){
   bmp388.INTEnable();
   /*while rising read temperature and pressure*/
   attachInterrupt(digitalPinToInterrupt(pin),inter,RISING);
+  times = millis();
 }
 
 void loop(){
-  times = millis();
   if(flag == 1){
   /*Read temperature and pressure*/
     float temperature = bmp388.readTemperature();
@@ -87,7 +87,7 @@ void loop(){
     delay(100);
   }
   /* After 10 seconds disable INT */
-  if(times >= 10000){
+  if(millis() - times >= 10000){
     bmp388.INTDisable();
   }
 }
