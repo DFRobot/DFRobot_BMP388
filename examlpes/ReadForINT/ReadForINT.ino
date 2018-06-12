@@ -5,6 +5,8 @@
   * CSB pin connect pin3/D3 if use SPI interface.
   * INT pin connect pin2/D2.
   * Download the program.
+  *
+  * This example describe reading data by judging the INT pin state.
   * When the data update, calling inter function,
   * after change the flag read the data.
   * @n Open serial monitor, the data could be checked. 
