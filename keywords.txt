@@ -19,6 +19,9 @@ readTemperature	KEYWORD2
 readPressure	KEYWORD2
 INTEnable	KEYWORD2
 INTDisable	KEYWORD2
+set_iic_addr	KEYWORD2
 #######################################
 # Constants (LITERAL1)
+BMP3_I2C_ADDR_PRIM	LITERAL1
+BMP3_I2C_ADDR_SEC	LITERAL1
 #######################################

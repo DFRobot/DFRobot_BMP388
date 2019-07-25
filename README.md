@@ -38,6 +38,13 @@ DFRobot_BMP388_I2C();
  */
 DFRobot_BMP388_SPI(int cs);
 
+/* 
+ * @brief Set bmp388 IIC address
+ * @param addr BMP3_I2C_ADDR_PRIM: pin SDO is low
+ *             BMP3_I2C_ADDR_SEC: pin SDO is high
+ */
+void set_iic_addr(uint8_t addr);
+
 /*
  * @brief Initialize bmp388, check for chip id, reset the sensor, read the calibration data and config sensor
  *

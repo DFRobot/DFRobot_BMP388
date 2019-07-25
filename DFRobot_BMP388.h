@@ -16,6 +16,7 @@
 #include "Arduino.h"
 #include "Wire.h"
 #include "SPI.h"
+
 #ifdef DEBUG
 #define DBG() Serial.print(__LINE__);Serial.print(" : ");Serial.println(__FUNCTION__);
 #else
@@ -36,6 +37,7 @@ public:
   float readAltitude(void);
   void INTEnable();
   void INTDisable();
+  void set_iic_addr(uint8_t addr);
   
 private:
   int8_t reset();
@@ -57,5 +59,6 @@ private:
 
 
   struct bmp3_dev dev;
+  uint8_t _addr;
   };
 #endif

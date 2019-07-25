@@ -6,6 +6,7 @@ import RPi.GPIO as GPIO
 from math import pow
 
 class DFRobot_BMP388:
+  
   def __init__(self):
     self.op_mode = 0
     self.par_t1 = 0
@@ -29,6 +30,7 @@ class DFRobot_BMP388:
       return
     self.get_calib_data()
     self.set_config()
+  
   
   def get_calib_data(self):
     calib = self.bmp3_get_regs(0x31,21) 
@@ -239,15 +241,15 @@ class DFRobot_BMP388_SPI(DFRobot_BMP388):
     self.spi.xfer(value)
     GPIO.output(self.cs,1)
     
-class DFRobot_BMP388_I2C(DFRobot_BMP388):
+class DFRobot_BMP388_I2C(DFRobot_BMP388, addr):
   def __init__(self):
-    self.addr = 119
+    self._addr = addr
     self.i2c = smbus.SMBus(1)
     super(DFRobot_BMP388_I2C,self).__init__()
 
   def bmp3_get_regs(self,reg,len):
-    rslt = self.i2c.read_i2c_block_data(self.addr,reg,len)
+    rslt = self.i2c.read_i2c_block_data(self._addr,reg,len)
     return rslt
 
   def bmp3_set_regs(self,reg,data):
-    self.i2c.write_i2c_block_data(self.addr,reg,data)
+    self.i2c.write_i2c_block_data(self._addr,reg,data)

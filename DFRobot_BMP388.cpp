@@ -76,7 +76,6 @@ int8_t user_spi_read(uint8_t dev_id, uint8_t reg_addr,uint8_t *data, uint16_t le
 
 DFRobot_BMP388::DFRobot_BMP388(){
   //nCS = 0;
-  dev.dev_id = 119;
   dev.intf = BMP3_I2C_INTF;
   dev.read = user_i2c_read;
   dev.write = user_i2c_write;
@@ -95,6 +94,10 @@ DFRobot_BMP388::DFRobot_BMP388(int cs){
   SPI.begin();
 }
 
+void DFRobot_BMP388::set_iic_addr(uint8_t addr)
+{
+    _addr = addr;
+}
 
 int8_t DFRobot_BMP388::set_config()
 {
@@ -143,6 +146,7 @@ int8_t DFRobot_BMP388::begin()
   uint8_t chip_id = 0;
   /* Read the chip-id of bmp3 sensor */
   DBG();
+  dev.dev_id = _addr;
   rslt = bmp3_get_regs(BMP3_CHIP_ID_ADDR, &chip_id, 1);
   /* Proceed if everything is fine until now */
   Serial.println(chip_id);

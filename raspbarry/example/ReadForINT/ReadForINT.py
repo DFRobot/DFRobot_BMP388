@@ -22,13 +22,16 @@
 #   SCLK(23)        SCK
 #   GND (25)        GND
 # 
+# BMP388_I2C_ADDR = 0x76: pin SDO is low
+# BMP388_I2C_ADDR = 0x77: pin SDO is high
+
 import bmp388
 import time
 import RPi.GPIO as GPIO
 # If 0, connect BMP388 to SPI interface of raspberry, else connect I2C interface
 if 0:
   # Create a bmp388 object to communicate with I2C.
-  bmp388 = bmp388.DFRobot_BMP388_I2C()
+  bmp388 = bmp388.DFRobot_BMP388_I2C(0x77)
   
 else:
   # Define chip selection pins

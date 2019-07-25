@@ -61,6 +61,12 @@ void setup(){
   /* Initialize the serial port */
   Serial.begin(9600);
   /* Initialize bmp388 */
+  /* 
+   * @brief Set bmp388 IIC address
+   * @param BMP3_I2C_ADDR_PRIM: pin SDO is low
+   *        BMP3_I2C_ADDR_SEC: pin SDO is high
+   */
+  bmp388.set_iic_addr(BMP3_I2C_ADDR_SEC);
   while(bmp388.begin()){
     Serial.println("Initialize error!");
     delay(1000);
