@@ -59,6 +59,6 @@ private:
 
 
   struct bmp3_dev dev;
-  uint8_t _addr;
+  uint8_t _addr = 0x77;
   };
 #endif
